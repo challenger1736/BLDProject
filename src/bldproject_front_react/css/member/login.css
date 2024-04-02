@@ -1,0 +1,64 @@
+/*로그인 페이지*/
+input:focus {outline: none;}
+#loginBox{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 100px;
+    z-index : 995;
+}
+#loginTitle{
+    width: 570px;
+    margin: 0 auto;
+    margin-bottom: 60px;
+    border-bottom: 3px solid #2d2d26;
+    text-align: center;
+    padding-bottom: 30px;
+}
+#loginTitle>img{
+    width: 200px;
+}
+#loginTitle>h1{
+    font-size: 46px;
+    color: #2d2d26;
+}
+#loginForm{
+    width: 500px;
+    margin: 0 auto;
+    padding: 60px 49px;
+    border: 1px solid rgba(222, 212, 183);
+    box-shadow: 3px 5px 10px -2px gray;
+    margin-bottom: 100px;
+}
+#loginForm>ul{
+    margin-bottom: 80px;
+}
+#loginForm>ul>li{
+    margin-bottom: 40px;
+}
+#loginForm>ul>li>input[type=text],#loginForm>ul>li>input[type=password]{
+    width: 400px;
+    height: 50px;
+    margin: 0 auto;
+    border: none;
+    border-bottom: 1px solid rgba(222, 212, 183);
+    padding: 4px 10px;
+}
+#loginBtn,#signupgoBtn{
+    width: 400px;
+    height: 50px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    background-color: #fff;
+    border: 1px solid rgba(222, 212, 183);
+    border-radius: 10px;
+    font-size: 26px;
+    color: #2d2d26;
+}
+#loginBtn:hover,#signupgoBtn:hover{
+    background-color: #2d2d26;
+    color:#fff;
+    cursor: pointer;
+    font-weight: bold;
+}

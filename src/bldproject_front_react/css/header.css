@@ -1,0 +1,184 @@
+/* 공통 css */
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    box-sizing: border-box;
+    /* font-family: ; 글꼴*/
+}
+a{
+    text-decoration: none;
+    color: #0d0d0d;
+}
+ul,ol{
+    list-style: none;
+}
+/* 공통 css 끝 */
+/* 테마 색상 #ded4b7(222,212,183), #2d2d26(45,45,38) */
+/* 헤더 시작 */
+#header{
+    display: flex;
+    background-color: white;
+    width: 100%;
+    height: 80px;
+    position: sticky;
+    top:0;
+    z-index:996;
+    border-bottom: 2px solid #F2F2F2
+}
+#gnv{
+    width: 1200px;
+    height: 80px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.headerLogos{
+    display: flex;
+
+}
+
+
+.logo{ /* 로고의 박스 사이즈 */
+    width: 100px;
+    height: 80px;
+}
+
+.logo>a>img{ /* 로고 이미지 조절 */
+    object-fit:contain;
+    width: 95px;
+    cursor: pointer;
+}
+#hamburger{ /* 햄버거 박스 사이즈 */
+    width: 80px;
+    height: 80px;
+    margin-left: 20px;
+    margin-top: 16px;
+    margin-right: 0px;
+}
+
+#hamburger>img{ /* 햄버거 이미지 조절 */
+    width: 40px;
+    cursor: pointer;
+}
+
+.headerLoginpart{ /* 헤더의 로그인 윗 줄 부분 */
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.headerLoginpart>div{
+    padding: 20px;
+ }
+
+
+/* 헤더 햄버거 메뉴 */
+.hamburgerMenu{ /* 햄버거 메뉴 리스트 일단 none*/
+    width: 400px;
+    height: 100%;
+    position: fixed;
+    left: -400px;
+    z-index: 999;
+    top: 0;
+    background-color: #F2F2F2;
+    transition: 0.3s ease; /* transform 속성에 대한 애니메이션 효과 추가 */
+    border-top-right-radius : 15px;
+    border-bottom-right-radius : 15px;
+}
+.hamburgerMenu.active { /* 누르면 보이게 */
+    left: 0px; /* active 클래스가 추가될 때 오른쪽으로 이동하여 보이도록 설정 */
+}
+
+/* 햄버거 메뉴의 윗부분 로고 및 글 귀  */
+.hbgMTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#Xmark{
+    width: 16px; 
+    margin-right: 30px; 
+    cursor: pointer;
+}
+
+/* 백그라운드 미리 깔아 놓기 */
+.darkBackground{
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+/* 백그라운드 .active 걸기 */
+.darkBackground.active{
+    z-index: 998;
+    display: block;
+}
+
+#member_service{
+    padding: 30px 20px;
+    width: 100%;
+}
+
+.loginNsignup{
+    display:flex;
+    align-items:center;
+}
+.loginNsignup>p{
+    margin-right:20px;
+}
+.loginNsignup>p>a:hover{
+    color:rgba(222, 212, 183);
+    text-decoration:underline;
+}
+.memberBox{
+    display:flex;
+    align-items:center;
+    margin-bottom:12px;
+}
+.memberBox>p{
+    margin-left:20px;
+}
+.memberMenu{
+    display:flex;
+    align-items:center;
+}
+.memberMenu>p{
+    margin-right:20px;
+}
+.memberMenu>p>a:hover{
+    color:rgba(222, 212, 183);
+    text-decoration:underline;
+}
+
+#main_menu>li{
+    padding: 30px 20px;
+    width: 100%;
+}
+
+#main_menu>li>a{
+    font-size:25px;
+}   
+
+#main_menu>li>a:hover{
+    color:rgba(222, 212, 183);
+    text-decoration:underline;
+    font-weight:bold;
+}
+
+.hbgUnderLine{
+    border : 1px solid gray;
+    margin: 0 auto;
+    width : 93%;
+    margin-bottom : 10px;
+}
+
+
+/* 헤더 끝 */
