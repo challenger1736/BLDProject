@@ -13,7 +13,7 @@ export default function SignUpEmail(props){
         </li>
         <li className="authbox">
             {props.authMailSend? 
-            <><span className="timebox">{"0"+parseInt(props.timer/60)+"분"}{parseInt(props.timer%60)<10?"0"+parseInt(props.timer%60):parseInt(props.timer%60)+"초"}</span>
+            <><span className="timebox">{"0"+parseInt(props.timer/60)+"분"}{parseInt(props.timer%60)<10?"0"+parseInt(props.timer%60)+"초":parseInt(props.timer%60)+"초"}</span>
             <input value={props.authNo} onChange={props.onChangeAuthNo} type="text" className="ecodeinput" disabled={props.emailInputDisable}/>
             <button onClick={props.auth} type="button" disabled={props.emailInputDisable}>인증</button></>: <></> }
         </li>

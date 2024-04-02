@@ -33,9 +33,9 @@ export default function SignUp2(props){
 
     // mid 중복검사
     const onMidCheck = (e)=>{
-        axios.get('/member/signup/idcheck?mid='+mid)
-            .then((r)=>{console.log(r);
-                if(r){
+        axios.get('/member/signup/idcheck',{params:{mid:mid}})
+            .then((r)=>{console.log(r.data);
+                if(r.data){
                     alert('사용가능한 아이디입니다.');
                     checkArray[0] = true;
                 }else{
@@ -139,7 +139,7 @@ export default function SignUp2(props){
 
     const authreq=(e)=>{
         axios.get("/auth/email/req?memail="+memail)
-            .then((r)=>{if(r){
+            .then((r)=>{if(r.data){
                 setauthMailSend(true);
                 alert('인증번호 전송 완료.')
                 ontimer()
@@ -208,18 +208,33 @@ export default function SignUp2(props){
 
     const auth = (e)=>{
         //authNo가 axios 랑 통신한 놈과 같은지 확인.
-        axios.get('auth/email/check?ecodeinput='+authNo)
-            .then((r)=>{if(r){
+        axios.get('auth/email/check', {params: { authNo: authNo }})
+            .then((r)=>{if(r.data){
                 console.log(e);
                 console.log(r);
                 emailInputDisable = true
                 checkArray[5]=true;
+                authMailSendfalse();
                 alert('인증 성공')}
             else{alert('인증 실패')}
         })
     }
+    // 주소
+    const checkArray6false = (e)=>{
+        checkArray[6]= false;
+    }
+    const checkArray6true = (e)=>{
+        checkArray[6]= true;
+    }
 
 
+    const onChangeMaddress=(e)=>{
+        setMadress(e);
+        console.log(maddress);
+    }
+    
+    
+    
     return(<>
         <div id="signupBox">
         <div id="signupTitle">
@@ -258,7 +273,11 @@ export default function SignUp2(props){
                 ontimer={ontimer}
                 auth={auth}
                 emailInputDisable={emailInputDisable}/>
-                <SignUpAddr />
+                <SignUpAddr 
+                onChangeMaddress={onChangeMaddress}
+                checkArray6false={checkArray6false}
+                checkArray6true={checkArray6true}
+                maddress={maddress}/>
                 <SignUpImg />
 
             </ul>
@@ -267,4 +286,7 @@ export default function SignUp2(props){
         </form>
     </div>
     </>)
+
+    
 }
+
