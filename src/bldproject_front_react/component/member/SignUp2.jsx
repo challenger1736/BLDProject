@@ -133,23 +133,71 @@ export default function SignUp2(props){
         setMemail(e.target.value);
     }
     // 이메일 인증번호 보내기 함수
-    let authMailSend = false; // 보내면 true로 됨.
+    const [authMailSend,setauthMailSend] = useState(false);
+    
 
 
     const authreq=(e)=>{
-        axios.get("/auth/email/req?email="+memail)
+        axios.get("/auth/email/req?memail="+memail)
             .then((r)=>{if(r){
-                authMailSend = true;
+                setauthMailSend(true);
                 alert('인증번호 전송 완료.')
+                ontimer()
             }else{
                 alert('인증번호 전송 실패.')
             }
         })
     }
+
+    
+    let [timer, setTimer] = useState(180);
+    let m = parseInt(timer/60); //분
+    let s = parseInt(timer%60); //분을 제외한 초
+    m = m < 10? "0"+m : m; // 8분 -> 08분
+    s = s < 10? "0"+s : s; // 3초 -> 03초
+
+    // 타이머 함수 실행
+    // 10. 타이머 함수
+    const ontimer=(e)=>{
+        setTimer(180);
+    // 테스트
+        // 정의 : setInterval(함수, 밀리초) : 특정 밀리초마다 함수 실행.
+        // 종료 : clearInterval(종료할Interval변수) : 종료할 Interval의 변수 대입.
+    //let time = 0;
+        let timerInter = setInterval(()=>{
+        // setInterval() 함수는 JavaScript에서 주어진 시간 간격마다
+        // 함수를 반복적으로 실행하는 역할을 합니다.
+        // 예시 >  setInterval(function() { console.log('반복 실행되는 함수');}, 1000)
+        // 멈추기 = clearInterval(setInterval변수명)
+    
+        // 1. 현재 날짜/시간
+        //    let today = new Date();
+        // 2. 타이머 리미트
+    
+        // 2-1 .이 타이머를 분 초로 나누기,
+       
+        // 2-2. 시간을 두 자릿수로 표현
+        
+        // 2-3. 출력
+        // 2-4. 초 감소
+        
+        setTimer(timer--);
+        // 2-5. 만약에 초가 0보다 작아지면
+        if(timer<0){    //
+            clearInterval(timerInter); // 이거 멈추려고 함수를 timerInter라는 변수에 저장해 둠
+            authMailSendfalse();
+    
+        }
+    
+    },1000);
+    
+}
+
+
     // 인증번호 인풋 아예 없애버리게 authMailSend=false해주는 함수 구현
     
     const authMailSendfalse = (e)=>{
-        authMailSend = false;
+        setauthMailSend(false);
     }
     // 실제 번호와 맞는지 비교 함수
     const [authNo, setAuthNo] = useState('')
@@ -157,10 +205,13 @@ export default function SignUp2(props){
         setAuthNo(e.target.value)
     }
     let emailInputDisable = false
+
     const auth = (e)=>{
         //authNo가 axios 랑 통신한 놈과 같은지 확인.
-        axios.get('auth/email/check?authNo='+authNo)
+        axios.get('auth/email/check?ecodeinput='+authNo)
             .then((r)=>{if(r){
+                console.log(e);
+                console.log(r);
                 emailInputDisable = true
                 checkArray[5]=true;
                 alert('인증 성공')}
@@ -200,9 +251,11 @@ export default function SignUp2(props){
                 memail={memail} 
                 authreq={authreq} 
                 authMailSend={authMailSend} 
-                authMailSendfalse={authMailSendfalse} 
+                authMailSendfalse={authMailSendfalse}
+                timer={timer} 
                 authNo={authNo} 
                 onChangeAuthNo={onChangeAuthNo}
+                ontimer={ontimer}
                 auth={auth}
                 emailInputDisable={emailInputDisable}/>
                 <SignUpAddr />
