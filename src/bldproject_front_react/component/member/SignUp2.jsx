@@ -1,11 +1,12 @@
-import logo from "../../img/Project_IMG/로고/logo_transparent_250.png"
-import { useState } from "react";
+import logo from "../../img/Project_IMG/로고/logo_transparent_1080.png"
+import { useRef, useState } from "react";
 import SignUpId from "./SignUpId";
 import axios from "axios";
 import SignUpPw from "./SignUpPw";
 import SignUpEmail from "./SignUpEmail";
 import SignUpAddr from "./SignUpAddr";
 import SignUpImg from "./SignUpImg";
+import signupCss from "../../css/member/signup.css";
 
 
 let checkArray = [false,false,false,false,false,false];
@@ -29,6 +30,7 @@ export default function SignUp2(props){
     // mid 수정함수.
      const onChangeMid = (e)=>{
         setMid(e.target.value);
+        checkArray0false();
     }
 
     // mid 중복검사
@@ -70,24 +72,25 @@ export default function SignUp2(props){
     // 수정함수
     const onChangeMname = (e)=>{
         setMname(e.target.value);
+        checkArray[2]= true;
     }
     // 생년월일
     // 수정함수
     const onChangeMbirth = (e) => {
         let input = e.target.value;
         if(input.length>10){
-            console.log(checkArray[2])
+            console.log(checkArray[3])
             return;
         }
-        checkArray[2]=false;
-        console.log(checkArray[2])
+        checkArray[3]=false;
+        console.log(checkArray[3])
         // "-"를 추가할 위치에 "-"를 삽입
-        if (input.length === 4 || input.length === 7) {
+        if (input.length === 4 && input.length>mbirth.length|| input.length === 7 && input.length>mbirth.length) {
           input += '-';
         }
         if(input.length===10){
-            console.log(checkArray[2]);
-            checkArray[2]=true;
+            console.log(checkArray[3]);
+            checkArray[3]=true;
         }
         
         
@@ -96,7 +99,7 @@ export default function SignUp2(props){
       };
     // 성별
     const onChangeMsex = (e) => {
-        checkArray[3]=true;
+        checkArray[4]=true;
         console.log(e.target.value)
         setMsex(e.target.value) 
         
@@ -108,7 +111,7 @@ export default function SignUp2(props){
         if(input.length>13){
             return;
         }
-        console.log(checkArray[2])
+
         // "-"를 추가할 위치에 "-"를 삽입
         if (input.length === 3 && input.length > mphone.length|| input.length === 7 && input.length > mphone.length) {
             input += '-';
@@ -120,7 +123,7 @@ export default function SignUp2(props){
             
         }
         if(input.length==13||input.length==12){
-            checkArray[4]=true;
+            checkArray[5]=true;
         }
         
         setMphone(input)
@@ -221,10 +224,10 @@ export default function SignUp2(props){
     }
     // 주소
     const checkArray6false = (e)=>{
-        checkArray[6]= false;
+        checkArray[6] = false;
     }
     const checkArray6true = (e)=>{
-        checkArray[6]= true;
+        checkArray[6] = true;
     }
 
 
@@ -232,16 +235,67 @@ export default function SignUp2(props){
         setMadress(e);
         console.log(maddress);
     }
+    // 프로필 이미지
     
+
+    // 회원 가입을 위한 유효성 검사
+    // 입력값 가져오기
+    const signUpForm = useRef(); // .current에 데이터 들어가 있음.
+
+    const signup=(e)=>{
+        console.log(checkArray)
+        // 유효성검사 체크 현황중에 하나라도 false이면 회원가입 금지
+        for(let i = 0; i < checkArray.length; i++){
+            if(!checkArray[i]){
+                alert('회원가입 실패 다시 확인해주세요.');
+                return;
+            }
+        }
+        
+
+        // // 4. ajax 통신
+        // $.ajax({
+        //     url : '/member/signup.do',
+        //     method : 'post',
+        //     data : infoData,
+        //     contentType : false,
+        //     processData : false,
+        //     success : function ( result ){
+        //         console.log(result);
+        //         // 4. 결과
+        //         if(result){
+        //             alert('회원가입 성공');
+        //             location.href = '/member/login';
+        //         }else{
+        //             alert('회원가입 실패');
+        //         }
+        //     }
+        // });
+        axios.post('/member/signup.do', signUpForm.current)
+        .then((r)=>{if(r.data){
+                alert('회원가입 성공')
+                window.location.href = "/login"
+            }else{
+                alert('회원가입 실패')
+            }
+        })
+        .catch((error)=>{console.log(error); alert('회원가입 에러')})
+    }
+
+    // 9-1. 회원가입 취소
+    function signupBack(){
+        alert('회원가입 취소');
+        window.location.href = "/"
+    }
     
     
     return(<>
         <div id="signupBox">
         <div id="signupTitle">
-            <img src={logo}/>
+            <img src={logo} />
             <h1>회원가입</h1>
         </div>
-        <form id="signupForm">
+        <form id="signupForm" ref={signUpForm}>
             <ul>
                 <SignUpId onChangeMid={onChangeMid} mid={mid} onMidCheck={onMidCheck} checkArray0false={checkArray0false}/>
                 <SignUpPw onChangeMpw={onChangeMpw} onChangeMpwC={onChangeMpwC} mpw={mpw} mpwC={mpwC} checkArray1false={checkArray1false} checkArray1true={checkArray1true}/>
@@ -250,7 +304,7 @@ export default function SignUp2(props){
                 </li>
                 <li>
                     <p>생년월일</p>
-                    <input type="text" value={mbirth} onChange={onChangeMbirth} id="mbirth" name="mbirth" placeholder="생년월일 / 2000-01-01 입력"/>
+                    <input type="text" value={mbirth} onChange={onChangeMbirth} id="mbirth" name="mbirth" placeholder="생년월일 / 2000-01-01 입력 ('-' 제외하고 입력해주세요.)"/>
                 </li>
                 <li>
                     <p>성별</p>
@@ -281,8 +335,8 @@ export default function SignUp2(props){
                 <SignUpImg />
 
             </ul>
-            {/* <button id="signupBtn" type="button" onClick={signup}>회원가입</button>
-            <button id="signupbackBtn" type="button" onClick={signupBack}>취소</button> */}
+            <button id="signupBtn" type="button" onClick={signup}>회원가입</button>
+            <button id="signupbackBtn" type="button" onClick={signupBack}>취소</button>
         </form>
     </div>
     </>)

@@ -1,6 +1,6 @@
 import axios from "axios";
 import logincss from '../../css/member/login.css'
-import logo from '../../img/Project_IMG/로고/logo_transparent_250.png'
+import logo from '../../img/Project_IMG/로고/logo_transparent_1080.png'
 
 export default function Login(props){
 

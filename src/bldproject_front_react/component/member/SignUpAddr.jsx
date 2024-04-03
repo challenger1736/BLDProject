@@ -8,7 +8,7 @@ export default function SignUpAddr(props) {
     const [maddress4,setMadress4] = useState('');
 
    
-
+    props.checkArray6false(); // 이거 하면 되나 안되나 모르겠다. 일단 해보자.
 
     const onChangeAd1 = (e)=>{
         setMadress1(e);
@@ -40,7 +40,7 @@ export default function SignUpAddr(props) {
                 onChangeAd1(data.zonecode); // 직접 DOM으로 만지면 useState를 바꿀수 없었음. 어휴 
                 onChangeAd2(data.address);
                 document.getElementById('sample3_detailAddress').focus(); // 상세주소 입력란으로 포커스 이동
-                
+                props.checkArray6true();
             }
         }).open();
     };
@@ -49,7 +49,7 @@ export default function SignUpAddr(props) {
         const element_wrapadd = document.getElementById('wrapadd');
         element_wrapadd.style.display = 'none';
     };
-    
+
     return (
         <div>
             <p>주소</p>

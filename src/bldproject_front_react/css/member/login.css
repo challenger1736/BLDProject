@@ -15,7 +15,8 @@ input:focus {outline: none;}
     padding-bottom: 30px;
 }
 #loginTitle>img{
-    width: 200px;
+    width: 400px;
+    display: inline-block;
 }
 #loginTitle>h1{
     font-size: 46px;

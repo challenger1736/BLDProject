@@ -7,7 +7,7 @@ export default function SignUpEmail(props){
         <li id="emailLi">
             <input type="text" value={props.memail} onChange={props.emailCheck} id="memail" name="memail" placeholder="이메일 입력" />
             <button className="send" type="button" onClick={props.authreq} disabled={emailj.test(props.memail)? false: true}>
-                인증번호 발송
+                인증 하기
             </button>
             <span className="emailcheckbox">{emailj.test(props.memail)? <p>올바른 형식입니다.</p>:<p>'@'와'.'을 포함한 이메일 형식으로 입력해주세요.</p>}</span>
         </li>
