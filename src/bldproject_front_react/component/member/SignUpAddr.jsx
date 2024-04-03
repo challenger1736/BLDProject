@@ -1,5 +1,5 @@
 import DaumPostcode from "react-daum-postcode";
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 
 export default function SignUpAddr(props) {
     const [maddress1,setMadress1] = useState('');
@@ -11,26 +11,24 @@ export default function SignUpAddr(props) {
   
     const onChangeAd1 = (e)=>{
         setMadress1(e);
-        plusadd();
     }
     const onChangeAd2 = (e)=>{
         setMadress2(e);
-        plusadd();
     }
     const onChangeAd3 = (e)=>{
         setMadress3(e.target.value);
-        plusadd();
     }
     const onChangeAd4 = (e)=>{
         setMadress4(e.target.value);
-        plusadd();
     }
 
     const plusadd = ()=>{
-        const total = maddress1+maddress2+maddress3+maddress4;
+        const total = maddress1+"/"+maddress2+"/"+maddress3+maddress4;
         console.log(total);
         props.onChangeMaddress(total);
     }
+
+    useEffect(plusadd, [maddress1, maddress2, maddress3, maddress4])
 
 
     const searchAddress = () => {
@@ -62,6 +60,7 @@ export default function SignUpAddr(props) {
             <div id="wrapadd" style={{ display: 'none', border: '1px solid', width: '500px', height: '300px', margin: '5px 0', position: 'relative' }}>
                 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style={{ cursor: 'pointer', position: 'absolute', right: '0px', top: '-1px', zIndex: '1' }} onClick={foldDaumPostcode} alt="접기 버튼" />
             </div> 
+            <input name="maddress" value={props.maddress} readOnly style={{display:'none'}}/>
         </div>
     );
 }

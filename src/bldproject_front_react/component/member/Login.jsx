@@ -10,6 +10,8 @@ export default function Login(props){
         const loginForm = document.querySelector('#loginForm');
         // 2. 데이터폼으로 변환 통신하기 위해서
         const loginFormData = new FormData(loginForm);
+        console.log(loginForm);
+        console.log(loginFormData);
         // 3. 서버와 통신
         axios.post('/member/login.do', loginFormData)
             .then((r)=>{console.log(r)

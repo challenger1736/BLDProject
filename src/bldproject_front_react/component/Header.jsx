@@ -3,9 +3,21 @@ import Xmark from '../img/Project_IMG/Xmark.png'
 import hbgLogo from '../img/Project_IMG/arrows-hamburger_512.png'
 import Headercss from '../css/header.css'
 import { Link } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { LoginInfoContext } from './Index'
+import axios from 'axios'
 
 export default function Header(props){
 
+    const [loginInfo, setLoginInfo] = useState('');
+
+    useEffect(()=>{
+        axios.get('/member/login/check.do')
+            .then(r=>{console.log(r);
+            setLoginInfo(r.data);
+            })
+            .catch(e=>{console.log(e)})
+    },[])
 
     return(<>
     <div className="darkBackground" onClick={toggleMenu}></div>
@@ -41,7 +53,7 @@ export default function Header(props){
                 <a href="#">등록 된 음식점</a>
             </li>
             <li>
-                <a href="#">게시판</a>
+                <Link to="/boardlist">게시판</Link>
             </li>
             <li>
                 <a href="#">맛집 모임</a>
@@ -59,12 +71,23 @@ export default function Header(props){
                 </div>
             </div>
             <div className="headerLoginpart">
+                {loginInfo==''?<>
                 <div>
                     <Link to="/login">로그인</Link>
                 </div>
                 <div>
                     <Link to="/signup">회원가입</Link>
                 </div>
+                </>
+                :<>
+                <div>
+                    <Link to="/mypage">내 정보NOT페이지구현</Link>
+                </div>
+                <div>
+                    <a href="javascript:void(0)" onClick={logout}>로그아웃</a>
+                </div>
+                </>
+                }
             </div>
         </div>
         
@@ -79,4 +102,13 @@ function toggleMenu(){
 
     let dark = document.querySelector('.darkBackground');
     dark.classList.toggle('active')
+}
+
+function logout(props){
+    axios.get('/member/logout.do')
+        .then(r=>{console.log(r);
+            if(r){alert('로그아웃 성공'); window.location.href="/"}
+            else{alert('로그아웃 실패')}
+        })
+        .catch(e=>{console.log(e)})
 }
