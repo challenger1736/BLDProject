@@ -9,7 +9,7 @@ import SignUpImg from "./SignUpImg";
 import signupCss from "../../css/member/signup.css";
 
 
-let checkArray = [false,false,false,false,false,false];
+let checkArray = [false,false,false,false,false,false,false];
 
 export default function SignUp2(props){
 
@@ -216,7 +216,7 @@ export default function SignUp2(props){
                 console.log(e);
                 console.log(r);
                 emailInputDisable = true
-                checkArray[5]=true;
+                checkArray[6]=true;
                 authMailSendfalse();
                 alert('인증 성공')}
             else{alert('인증 실패')}
@@ -224,16 +224,17 @@ export default function SignUp2(props){
     }
     // 주소
     const checkArray6false = (e)=>{
-        checkArray[6] = false;
+        checkArray[7] = false;
     }
     const checkArray6true = (e)=>{
-        checkArray[6] = true;
+        checkArray[7] = true;
     }
 
 
     const onChangeMaddress=(e)=>{
         setMadress(e);
         console.log(maddress);
+        checkArray[7] = true;
     }
     // 프로필 이미지
     

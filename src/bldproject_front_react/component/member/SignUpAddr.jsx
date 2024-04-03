@@ -8,8 +8,7 @@ export default function SignUpAddr(props) {
     const [maddress4,setMadress4] = useState('');
 
    
-    props.checkArray6false(); // 이거 하면 되나 안되나 모르겠다. 일단 해보자.
-
+  
     const onChangeAd1 = (e)=>{
         setMadress1(e);
         plusadd();
