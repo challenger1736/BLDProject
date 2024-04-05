@@ -7,6 +7,9 @@ import SignUp2 from "./member/SignUp2";
 import React, { useState } from "react";
 import MyPage from "./member/MyPage/MyPage";
 import BoardList from "./board/BoardList";
+import BoardWrite from "./board/BoardWrite";
+import App from "./board/App";
+import Board1View from "./board/Board1View";
 
 // ============ 컨텍스트 만들기 ============= //
 // 1. React.createContext( 초기값 ) 이용한 컨텍스트 선언  // import React from "react";
@@ -29,6 +32,8 @@ export default function Index(props){
                     <Route path="/signup" element={<SignUp2/>}/>
                     <Route path="/mypage" element={<MyPage />}/>
                     <Route path="/boardlist" element={<BoardList />}/>
+                    <Route path="/board/write" element={<BoardWrite/>}/>
+                    <Route path="/board1/:bno" element={<Board1View />}/>
                 </Routes>
             <Footer/>
             </div>

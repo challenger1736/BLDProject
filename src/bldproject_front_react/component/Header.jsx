@@ -11,7 +11,7 @@ export default function Header(props){
 
     const [loginInfo, setLoginInfo] = useState('');
 
-    useEffect(()=>{
+    useEffect( ()=>{
         axios.get('/member/login/check.do')
             .then(r=>{console.log(r);
             setLoginInfo(r.data);
@@ -53,7 +53,7 @@ export default function Header(props){
                 <a href="#">등록 된 음식점</a>
             </li>
             <li>
-                <Link to="/boardlist">게시판</Link>
+                <Link to="/boardlist"  onClick={toggleMenu}>게시판</Link>
             </li>
             <li>
                 <a href="#">맛집 모임</a>

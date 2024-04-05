@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
 import Pagination from '@mui/material/Pagination';
 import axios from "axios";
-
+import boardlistcss from "../../css/board/boardlist.css";
+import { Link } from "react-router-dom";
+import Board1View from "./Board1View";
 
 export default function BoardList(){
     // 1. useState 변수
-    const [pageDto, setPageDto] = useState({page:1,count:0,data:[],categorya:0,categoryb:0}) // page 1페이지 , count : 볼 페이지 수, data : 받아올 데이터들
+    const [pageDto, setPageDto] = useState({page:1,count:0,data:[],categorya:0,categoryb:0}) // page 1페이지 , count : 볼 총 페이지 네이션 수, data : 받아올 데이터들
+    const [recodeview, setRecodeview] = useState(5);
+    const [render, setRender] = useState('');
 
     const handleChange = (event: e, value: value) => {
         pageDto.page = value;
@@ -13,10 +17,13 @@ export default function BoardList(){
     }
 
     const getBoardList = () =>{
-        const info = {page:pageDto.page , categorya:pageDto.categorya , categoryb:pageDto.categoryb, recordview:4}
-        axios.get('/board/get.do',{params:info})
+        const info = {page:pageDto.page , categorya:pageDto.categorya , categoryb:pageDto.categoryb, recordview:recodeview}
+        console.log(pageDto.categorya);
+        console.log(pageDto.categoryb);
+        axios.get('/board/list.do',{params:info})
             .then(response=>{
-                console.log(response);
+                console.log(response);  
+                console.log(response.data);
                 setPageDto(response.data);
             })
             .catch(error=>{console.log(error)})
@@ -25,41 +32,55 @@ export default function BoardList(){
 
     useEffect(()=>{
         getBoardList()
-    },[pageDto.page])
+    },[pageDto.page, recodeview, render])
+
+    const onCategoryAChoose = (e) => {
+        console.log(e.target.value);
+        pageDto.categorya = e.target.value;
+        setPageDto({...pageDto});
+        setRender({...render});
+    }
+
+    const onCategoryBChoose = (e) => {
+        console.log(e.target.value);
+        pageDto.categoryb = e.target.value;
+        setPageDto({...pageDto});
+        setRender({...render});
+    }
+
+    const onRecodeview = (e) => {
+        console.log(e.target.value);
+        setRecodeview(e.target.value)
+    }
 
     return(<>
         
 <div id="boardListForm">
 
-<div id="listView"> 게시글 출력라인 
-     카테고리 / 페이지 출력수
+<div id="listView">
     <div id="boardListTop">
-        <div id="categoryChooseBox"> 카테고리 
-             지역 카테고리 
-            카테고리 선택 {'>'} <select className="categoryAChoose " onChange="onCategoryAChoose(this)">
-                <option value="0">전체</option>
-                <option value="1">자유</option>
-                <option value="2">안산</option>
-                <option value="3">시흥</option>
-                <option value="4">수원</option>
-                <option value="5">부천</option>
-                <option value="6">안양</option>
-                <option value="7">서울</option>
-            </select>
-             음식분류 카테고리 
-            <select className="categoryBChoose" onChange="onCategoryBChoose(this)">
-                <option value="0">전체</option>
-                <option value="1">한식</option>
-                <option value="2">일식</option>
-                <option value="3">중식</option>
-                <option value="4">양식</option>
-                <option value="5">분식</option>
-                <option value="6">패스트푸드</option>
+        <div id="categoryChooseBox">
+            카테고리 선택<br/><br/> 지역 <select className="categoryAChoose " onChange={onCategoryAChoose}>
+                <option value={0}>전체</option>
+                <option value={1}>자유</option>
+                <option value={2}>안산</option>
+                <option value={3}>시흥</option>
+                <option value={4}>수원</option>
+                <option value={5}>부천</option>
+                <option value={6}>안양</option>
+                <option value={7}>서울</option>
+            </select> 음식분류 <select className="categoryBChoose" onChange={onCategoryBChoose}>
+                <option value={0}>전체</option>
+                <option value={1}>한식</option>
+                <option value={2}>일식</option>
+                <option value={3}>중식</option>
+                <option value={4}>양식</option>
+                <option value={5}>분식</option>
+                <option value={6}>패스트푸드</option>
             </select>
         </div>
         <div id="pageBoardSizeChooseBox">
-             onChange 값이 바뀔때마다 실행 
-            출력 게시글 수 : <select className="pageBoardSize" onChange="onPageBoardSize(this)">
+            출력 게시글 수 : <select className="pageBoardSize" onChange={onRecodeview}>
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="15">15</option>
@@ -75,34 +96,43 @@ export default function BoardList(){
         <table className="table table-striped table-hover align-middle" style={{width: '100%', textAlign: 'center'}}>
             <thead>
             <tr className="table-info">
-                <th style={{width:'20%'}}>등록일자</th>
-                <th style={{width:'50%'}}>제목</th>
+                <th style={{width:'10%'}}>번호</th>
+                <th style={{width:'40%'}}>제목</th>
                 <th style={{width:'10%'}}>조회수</th>
-                <th style={{width:'20%'}}>작성자</th>
+                <th style={{width:'10%'}}>작성자</th>
+                <th style={{width:'20%'}}>등록일자</th>
             </tr>
             </thead>
             <tbody id="boardTableBody">
-                <tr>
-                    <td>2024-03-05 11:00:30</td>
-                    <td style={{textAlign: 'left'}}>제목1</td>
-                    <td>조회수</td>
-                    <td>
-                        <img src="" style={{width:'20px', borderRadius:'50%'}} />
-                        작성자이름
-                    </td>
-                </tr>
+                {pageDto.data.map((board)=>{
+                    let link = "/board1/"+ board.bno;
+                    return(
+                        
+                        <tr>
+                            
+                        <td>{board.bno}</td>
+                        <td style={{textAlign:'left'}}><Link to={link}>{board.bname}</Link></td>
+                        <td>{board.bcount}</td>
+                        <td>
+                            <img src="" style={{width:'20px', borderRadius:'50%'}}/>
+                            {board.mid}
+                        </td>
+                        <td>
+                            {board.cdate==null||board.cdate.split('T')[0]}
+                        </td>
+                        
+                    </tr>
+                    )
+                })}
             </tbody>
         </table>
     </div>
-    <div id="boardListButton">
-        <button type="button" onClick="myBoardList(1)">내글보기</button>
-        <a href="/board/write"><button type="button">글쓰기</button></a>
+    <div id="boardListButton" >
+        <Link to="/board/write"><button type="button">글쓰기</button></Link>
     </div>
-
-
-     페이지 네이션 
+    <div className="pagination">
      <Pagination count={pageDto.count} page={pageDto.page} onChange={handleChange} />
-
+     </div>
     <div id="boardSearchBox">
         <div className="d-flex">
             <select name="" id="searchQ" style={{width:'20%'}}>
@@ -110,8 +140,8 @@ export default function BoardList(){
                 <option value="b.bname">제목</option>
                 <option value="m.mid">작성자</option>
             </select>
-            <input className="keyword" onKeyUp="enterKey()" type="text" placeholder="Search" style={{width:'50%'}}/>
-            <button className="btn btn-outline-success" type="button" onClick="doSearch()" style={{width:'30%'}}>검색하기</button>
+            {/* <input className="keyword" onKeyUp="enterKey()" type="text" placeholder="Search" style={{width:'50%'}}/>
+            <button className="btn btn-outline-success" type="button" onClick="doSearch()" style={{width:'30%'}}>검색하기</button> */}
         </div>
     </div>
 </div>
