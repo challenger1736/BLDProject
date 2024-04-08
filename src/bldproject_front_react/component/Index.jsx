@@ -10,6 +10,7 @@ import BoardList from "./board/BoardList";
 import BoardWrite from "./board/BoardWrite";
 import App from "./board/App";
 import Board1View from "./board/Board1View";
+import Board1Update from "./board/Board1Update";
 
 // ============ 컨텍스트 만들기 ============= //
 // 1. React.createContext( 초기값 ) 이용한 컨텍스트 선언  // import React from "react";
@@ -34,6 +35,7 @@ export default function Index(props){
                     <Route path="/boardlist" element={<BoardList />}/>
                     <Route path="/board/write" element={<BoardWrite/>}/>
                     <Route path="/board1/:bno" element={<Board1View />}/>
+                    <Route path="/board/update/:bno" element={<Board1Update/>}/>
                 </Routes>
             <Footer/>
             </div>

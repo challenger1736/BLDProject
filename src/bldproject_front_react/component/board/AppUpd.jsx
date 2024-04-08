@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Hidden } from "@mui/material";
 // import MyButton from "./MyButton";
 
-const App = (props) => {
+const AppUpd = (props) => {
   const navigate = useNavigate(); // 글쓰기 페이지에서 다른 페이지로 이동할 수 있는 navigate
 
   console.log(props);
@@ -69,23 +69,7 @@ const App = (props) => {
     //   }
     // });
 //   };
-if(props){
-  
 
-  return(
-    <div className="Editorprops">
-    <section> 
-    <input value={content} style={{display: 'none'}} name="bcontent"/>
-    {/* bcontent dto에 들어가나 확인용 */}
-      <CKEditor
-        editor={ClassicEditor}
-        data={props.content}
-        config={{toolbar:'none'}}
-      />
-    </section>
-  </div>
-  )
-}
 
   return (
     <div className="Editor">
@@ -94,7 +78,7 @@ if(props){
       {/* bcontent dto에 들어가나 확인용 */}
         <CKEditor
           editor={ClassicEditor}
-          data=""
+          data={props.content}
           config={{ extraPlugins: [uploadPlugin], placeholder : '내용을 입력하세요' }}
           onReady={(editor) => {
             // You can store the "editor" and use when it is needed.
@@ -116,4 +100,4 @@ if(props){
   );
 };
 
-export default App; 
+export default AppUpd; 

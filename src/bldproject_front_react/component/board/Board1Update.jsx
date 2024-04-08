@@ -1,24 +1,36 @@
-import axios from "axios";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import App from "./App";
-import boardwritecss from "../../css/board/boardwrite.css";
+import { useContext, useEffect, useRef, useState } from "react";
+import { LoginInfoContext } from '../Index';
+import board1viewcss from '../../css/board/board1view.css'
+import viewcountlogo from '../../img/Project_IMG/view-icon.png'
+import { Link, useParams } from 'react-router-dom';
+import { Axios } from "axios";
+import axios from 'axios';
 import AppUpd from "./AppUpd";
 
-
-
-
-export default function BoardWrite(props){
-
-    // 1. 재랜더링 고정함수 = 얘는 따로 바꿔주지 않는 이상 재렌더링 되도 고정이다.
+export default function Board1Update(){
+    const { bno } = useParams();
+    console.log(bno);
+     // 1. 재랜더링 고정함수 = 얘는 따로 바꿔주지 않는 이상 재렌더링 되도 고정이다.
     const boardWriteFormRef = useRef();
+
+    const {loginInfo} = useContext(LoginInfoContext); // 인덱스의 컨텍스트 참조해서 쓰기
+
+    const[boardDto, setBoardDto] = useState({});
+
+    useEffect(()=>{
+        axios.get('/board/board1get.do',{params:{bno:bno}})
+        .then(r=>{console.log(r.data)
+            setBoardDto(r.data);
+        })
+        .catch(error=>{console.log(error)})
+    },[])
 
     const onWrite = () =>{
 
-        axios.post('/board/create.do',boardWriteFormRef.current) //. current 에 폼이 들어가 있음
+        axios.put('/board/update.do',boardWriteFormRef.current) //. current 에 폼이 들어가 있음
             .then(response =>{console.log(response)
                 if(response.data>0){
-                    alert('글쓰기 성공')
+                    alert('글수정 성공')
                     window.location.href="/board1/"+ response.data;
                     
                 }else if(response.data==-1){
@@ -30,11 +42,13 @@ export default function BoardWrite(props){
             })
             .catch(error=>{console.log(error); alert('글쓰기 에러')})
     }
-
+    
+    let link = '/board1/'+bno;
     return(<>
      <div className="container">
         
         <form className="boardWriteForm" ref={boardWriteFormRef}>
+        <input value={bno} name="bno" style={{display:'none'}}/>
             <h3 style={{fontSize : '32px', marginTop: '30px'}}>게시글 쓰기</h3><br/>
             <div>
                 지역 : <select name="categorya">
@@ -63,15 +77,15 @@ export default function BoardWrite(props){
             </div>
             <div id="summernoteBox">
                 <span>내용</span>
-                <App/>
+                <AppUpd content={boardDto.bcontent}/>
                 <div className="writeBtnBox">
-                    <button type="button" onClick={onWrite}>쓰기</button>
-                    <Link to="/boardlist"><button type="button">돌아가기</button></Link>
+                    <button type="button" onClick={onWrite}>수정완료</button>
+                    <Link to={link}><button type="button">취소</button></Link>
                 </div>
             </div>
 
         </form>
     </div>
-    </>)
-
+    </>
+    )
 }

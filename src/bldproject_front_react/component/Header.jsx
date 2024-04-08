@@ -9,8 +9,8 @@ import axios from 'axios'
 
 export default function Header(props){
 
-    const [loginInfo, setLoginInfo] = useState('');
-
+    const {loginInfo, setLoginInfo} = useContext(LoginInfoContext);
+    
     useEffect( ()=>{
         axios.get('/member/login/check.do')
             .then(r=>{console.log(r);
