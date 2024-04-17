@@ -24,13 +24,14 @@ export default function Board1View(props){
     useEffect(()=>{
     axios.get('/board/board1get.do',{params:{bno:bno}})
         .then(r=>{console.log(r.data)
-            setBoardDto(r.data);
-            setReplyList(r.data.replyDtoList);
+            
             if (!isCountIncreased) {
-                increasePostViewCount(bno);
+                increasePostViewCount(bno)
                 setIsCountIncreased(true);
               }
-           
+              setBoardDto(r.data);
+              setReplyList(r.data.replyDtoList);
+            
         })
         .catch(error=>{console.log(error);
         })

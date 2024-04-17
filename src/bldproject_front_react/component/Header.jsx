@@ -41,22 +41,19 @@ export default function Header(props){
         <div className='hbgUnderLine'></div>
         <ul id='main_menu'>
             <li>
-                <a href="#">추천 맛집</a>
-            </li>
-            <li>
                 <a href="/map">내 주변 맛집</a>
             </li>
             <li>
                 <a href="#">지역별 인기 맛집</a>
             </li>
             <li>
-                <a href="#">등록 된 음식점</a>
+                <Link to="/storelist"  onClick={toggleMenu}>등록된 음식점</Link>
+            </li>
+            <li>
+                <Link to="/store/reg"  onClick={toggleMenu}>가게 등록하기 임시페이지</Link>
             </li>
             <li>
                 <Link to="/boardlist"  onClick={toggleMenu}>게시판</Link>
-            </li>
-            <li>
-                <a href="#">맛집 모임</a>
             </li>
         </ul>
     </div>
@@ -81,7 +78,7 @@ export default function Header(props){
                 </>
                 :<>
                 <div>
-                    <Link to="/mypage">내 정보NOT페이지구현</Link>
+                    <Link to="/mypage">마이 페이지</Link>
                 </div>
                 <div>
                     <a href="javascript:void(0)" onClick={logout}>로그아웃</a>

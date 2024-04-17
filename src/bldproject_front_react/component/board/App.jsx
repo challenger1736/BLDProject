@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Hidden } from "@mui/material";
 // import MyButton from "./MyButton";
+import Appcss from "../../css/board/App.css"
 
 const App = (props) => {
   const navigate = useNavigate(); // 글쓰기 페이지에서 다른 페이지로 이동할 수 있는 navigate
@@ -15,7 +16,7 @@ const App = (props) => {
 //   const titleRef = useRef();
 
 //   const [title, setTitle] = useState("");
-  const [content, setContent] = useState(""); // content State 관리
+  // const [content, setContent] = useState(""); // content State 관리
 
   const customUploadAdapter = (loader) => {
     console.log(loader);
@@ -25,9 +26,10 @@ const App = (props) => {
           const formData = new FormData();
           loader.file.then((file) => {
             formData.append("file", file);
+            formData.append("name", file.name);
 
             // axios
-            //   .post("http://localhost:8080/api/v0/file/upload", formData)
+            //   .post("/api/v0/file/upload", formData)
             //   .then((res) => {
             //     resolve({
             //       default: res.data.data.uri,
@@ -59,28 +61,18 @@ const App = (props) => {
     //   content,
     // };
 
-    // axios.post("http://localhost:8080/api/v0/post", data).then((res) => {
-    //   if (res.status === 200) {
-    //     navigate("/", { replace: true });
-    //     return;
-    //   } else {
-    //     alert("업로드 실패.");
-    //     return;
-    //   }
-    // });
-//   };
-if(props){
+
+if(JSON.stringify(props)!='{}'){
   
 
   return(
     <div className="Editorprops">
     <section> 
-    <input value={content} style={{display: 'none'}} name="bcontent"/>
-    {/* bcontent dto에 들어가나 확인용 */}
       <CKEditor
+        config={{toolbar: 'none'}}
         editor={ClassicEditor}
         data={props.content}
-        config={{toolbar:'none'}}
+        
       />
     </section>
   </div>
@@ -90,8 +82,6 @@ if(props){
   return (
     <div className="Editor">
       <section> 
-      <input value={content} style={{display: 'none'}} name="bcontent"/>
-      {/* bcontent dto에 들어가나 확인용 */}
         <CKEditor
           editor={ClassicEditor}
           data=""
@@ -100,10 +90,7 @@ if(props){
             // You can store the "editor" and use when it is needed.
             console.log("Editor is ready to use!", editor);
           }}
-          onChange={(event, editor) => {
-            setContent(editor.getData());
-            console.log({ event, editor, content });
-          }}
+          onChange={(event,editor)=>{console.log(editor.getData())}}
           onBlur={(event, editor) => {
             console.log("Blur.", editor);
           }}
@@ -114,6 +101,7 @@ if(props){
       </section>
     </div>
   );
+
 };
 
 export default App; 

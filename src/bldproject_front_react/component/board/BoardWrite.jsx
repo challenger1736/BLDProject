@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import App from "./App";
 import boardwritecss from "../../css/board/boardwrite.css";
@@ -12,10 +12,20 @@ export default function BoardWrite(props){
 
     // 1. 재랜더링 고정함수 = 얘는 따로 바꿔주지 않는 이상 재렌더링 되도 고정이다.
     const boardWriteFormRef = useRef();
+    const [content, setContent] = useState("");
+    const editorchange = (event, editor) => {
+        setContent(editor.getData());
+        console.log({ event, editor, content });
+      }
 
     const onWrite = () =>{
+        const formData = new FormData();
+        formData.append('categorya', document.querySelector('[name=categorya]').value);
+        formData.append('categoryb', document.querySelector('[name=categoryb]').value);
+        formData.append('bname', document.getElementById('bname').value);
+        formData.append('bcontent', content);
 
-        axios.post('/board/create.do',boardWriteFormRef.current) //. current 에 폼이 들어가 있음
+        axios.post('/board/create.do',formData) //. current 에 폼이 들어가 있음
             .then(response =>{console.log(response)
                 if(response.data>0){
                     alert('글쓰기 성공')
@@ -63,7 +73,7 @@ export default function BoardWrite(props){
             </div>
             <div id="summernoteBox">
                 <span>내용</span>
-                <App/>
+                <App editorchange={editorchange} />
                 <div className="writeBtnBox">
                     <button type="button" onClick={onWrite}>쓰기</button>
                     <Link to="/boardlist"><button type="button">돌아가기</button></Link>

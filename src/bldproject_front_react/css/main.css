@@ -30,7 +30,7 @@
     height:100%;
 }
 .mainMapBox>a:hover{
-    border: 3px solid #FF7C2B;
+    border: 3px solid #2d2d2d;
     box-shadow: 2px 2px 10px #999;
 }
 .mainMapBox>img{
@@ -87,7 +87,6 @@
   height: 640px;
   background-color: #F2F2F2;
   margin: 0 auto;
-  overflow-x: hidden;
 }
 
   .inner-list {
@@ -113,7 +112,7 @@
     object-fit: cover;
   }
 
-  /* .button-list {
+  .button-list {
     position: absolute;
     top : 90px;
     width: 100%;
@@ -121,9 +120,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  } */
+  }
   /* .button-list >button{ */
-.button-left , .button-right{
+/* .button-left , .button-right{
     text-align: center;
     font-size: 40px;
     font-weight: bold;
@@ -132,7 +131,7 @@
     background-color: #0d0d0d00;
     color: white;
     border: none;
-  }
+  } */
 .button-left{
   position: absolute;
   top : 0px;
