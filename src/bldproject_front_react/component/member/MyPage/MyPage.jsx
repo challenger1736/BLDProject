@@ -19,7 +19,7 @@ export default function MyPage(props){
 
     
     const myinfoGet = (e)=>{
-    axios.get('member/mypage/myinfo',{params: {mno:loginInfo.mno}})
+    axios.get('/member/mypage/myinfo',{params: {mno:loginInfo.mno}})
     .then(r=>{
         console.log(r.data);
         setMyinfo(r.data);
