@@ -135,11 +135,11 @@ export default function BoardList(){
      </div>
     <div id="boardSearchBox">
         <div className="d-flex">
-            <select name="" id="searchQ" style={{width:'20%'}}>
+            {/* <select name="" id="searchQ" style={{width:'20%'}}>
                 <option value="1">제목+작성자</option>
                 <option value="b.bname">제목</option>
                 <option value="m.mid">작성자</option>
-            </select>
+            </select> */}
             {/* <input className="keyword" onKeyUp="enterKey()" type="text" placeholder="Search" style={{width:'50%'}}/>
             <button className="btn btn-outline-success" type="button" onClick="doSearch()" style={{width:'30%'}}>검색하기</button> */}
         </div>
